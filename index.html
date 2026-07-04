@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For Hargun</title>
+
+<!-- ============================================================= -->
+<!--  PHOTOS: drop image files in the SAME folder as this .html    -->
+<!--  and name them exactly as below. Empty ones show a nice        -->
+<!--  labeled placeholder, so you can add them one at a time.       -->
+<!--  house-1..4.jpg  us.jpg  heart-lake.jpg  mccloud-falls.jpg     -->
+<!--  castle-crags.jpg  hedge-creek.jpg  sf-lunch.jpg  hero-bg.jpg  -->
+<!-- ============================================================= -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@300;400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --wine:#4E1533;
+  --deep-rose:#B83B6B;
+  --rose:#E86A9A;
+  --blush:#F9CBDC;
+  --rosegold:#D8A25A;
+  --cream:#FFF6F3;
+  --ink:#3A1226;
+  --shadow:0 24px 60px -20px rgba(78,21,51,.35);
+  --shadow-sm:0 12px 30px -14px rgba(78,21,51,.30);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Manrope',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+body.locked{overflow:hidden;height:100vh}
+
+/* soft ambient background wash */
+.bg-wash{
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(60vw 60vw at 15% 10%, rgba(249,203,220,.55), transparent 60%),
+    radial-gradient(50vw 50vw at 85% 20%, rgba(232,106,154,.20), transparent 60%),
+    radial-gradient(70vw 70vw at 70% 90%, rgba(216,162,90,.16), transparent 60%),
+    var(--cream);
+}
+
+/* ---------- floating petals ---------- */
+.petal{
+  position:fixed;bottom:-40px;z-index:0;
+  width:14px;height:14px;pointer-events:none;
+  background:linear-gradient(135deg,var(--rose),var(--blush));
+  border-radius:0 100% 0 100%;
+  opacity:.55;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(0deg);opacity:0}
+  10%{opacity:.6}
+  100%{transform:translateY(-115vh) rotate(540deg);opacity:0}
+}
+
+/* ---------- opening gate ---------- */
+.gate{
+  position:fixed;inset:0;z-index:100;
+  display:grid;place-items:center;
+  background:
+    radial-gradient(80vw 80vw at 50% 40%, rgba(249,203,220,.9), transparent 70%),
+    linear-gradient(160deg,#fff 0%,var(--cream) 100%);
+  transition:opacity 1.1s ease, visibility 1.1s ease;
+}
+.gate.open{opacity:0;visibility:hidden}
+.gate-card{
+  text-align:center;padding:56px 44px;cursor:pointer;
+  transform:translateY(0);
+  transition:transform .8s cubic-bezier(.2,.8,.2,1);
+}
+.gate.open .gate-card{transform:translateY(-30px)}
+.seal{
+  width:120px;height:120px;margin:0 auto 26px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#fff,var(--blush) 55%,var(--rose));
+  box-shadow:var(--shadow),inset 0 2px 8px rgba(255,255,255,.7);
+  animation:beat 2.4s ease-in-out infinite;
+}
+.seal svg{width:52px;height:52px;fill:var(--deep-rose)}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.gate .eyebrow{
+  font-size:.8rem;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--deep-rose);margin-bottom:14px;font-weight:600;
+}
+.gate h1{
+  font-family:'Parisienne',cursive;font-weight:400;
+  font-size:clamp(3.2rem,10vw,5.6rem);color:var(--wine);
+  line-height:1;margin-bottom:22px;padding:.1em .1em .2em;overflow:visible;
+}
+.gate .tap{
+  font-size:.95rem;color:var(--deep-rose);letter-spacing:.08em;
+  display:inline-flex;align-items:center;gap:9px;
+}
+.tap .dot{width:8px;height:8px;border-radius:50%;background:var(--rose);
+  animation:beat 1.6s ease-in-out infinite}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:120px 24px 80px;overflow:hidden;
+}
+.hero-photo{
+  position:absolute;inset:0;z-index:-1;
+  background-size:cover;background-position:center;
+  filter:saturate(1.05);
+}
+.hero-photo::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(255,246,243,.35),rgba(255,246,243,.85) 70%,var(--cream));
+}
+.hero .eyebrow{
+  font-size:.82rem;letter-spacing:.44em;text-transform:uppercase;
+  color:var(--deep-rose);font-weight:600;margin-bottom:20px;
+  opacity:0;animation:fadeUp 1s .2s both;
+}
+.hero .name{
+  font-family:'Parisienne',cursive;
+  font-size:clamp(4rem,15vw,10rem);line-height:1;
+  background:linear-gradient(120deg,var(--deep-rose),var(--rose) 55%,var(--rosegold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;animation:fadeUp 1.2s .4s both;
+  padding:.14em .12em .24em;overflow:visible;
+  max-width:100%;
+}
+.hero .sub{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.15rem,3.4vw,1.7rem);color:var(--wine);
+  margin:18px 0 6px;max-width:36ch;
+  opacity:0;animation:fadeUp 1.2s .7s both;
+}
+.hero .dates{
+  font-size:.95rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--deep-rose);font-weight:600;margin-top:8px;
+  opacity:0;animation:fadeUp 1.2s .9s both;
+}
+
+/* countdown */
+.countdown{
+  display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;justify-content:center;
+  opacity:0;animation:fadeUp 1.2s 1.1s both;
+}
+.cd-unit{
+  background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
+  border:1px solid rgba(232,106,154,.25);
+  border-radius:18px;padding:16px 20px;min-width:82px;
+  box-shadow:var(--shadow-sm);
+}
+.cd-num{font-family:'Fraunces',serif;font-size:2rem;font-weight:600;color:var(--deep-rose);line-height:1}
+.cd-lbl{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--wine);margin-top:6px;opacity:.7}
+
+.scroll-cue{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--deep-rose);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  opacity:0;animation:fadeUp 1.2s 1.4s both;
+}
+.scroll-cue .mouse{
+  width:22px;height:34px;border:2px solid var(--rose);border-radius:12px;position:relative;
+}
+.scroll-cue .mouse::before{
+  content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:4px;height:7px;border-radius:2px;background:var(--rose);
+  animation:wheel 1.6s ease-in-out infinite;
+}
+@keyframes wheel{0%{opacity:0;top:6px}40%{opacity:1}100%{opacity:0;top:16px}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------- section intro ---------- */
+.intro{max-width:760px;margin:0 auto;padding:90px 24px 30px;text-align:center}
+.intro .eyebrow{font-size:.78rem;letter-spacing:.4em;text-transform:uppercase;color:var(--rosegold);font-weight:600;margin-bottom:16px}
+.intro h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);color:var(--wine);line-height:1.15;margin-bottom:18px}
+.intro p{font-size:1.05rem;color:var(--ink);opacity:.85;max-width:52ch;margin:0 auto}
+
+/* ---------- timeline / route ---------- */
+.timeline{position:relative;max-width:1040px;margin:40px auto 0;padding:40px 24px 60px}
+.route-svg{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  height:100%;width:120px;z-index:0;pointer-events:none;overflow:visible;
+}
+.route-path{
+  fill:none;stroke:url(#routeGrad);stroke-width:3.5;
+  stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;
+}
+
+.day-label{
+  position:relative;z-index:2;text-align:center;margin:20px 0 46px;
+}
+.day-label span{
+  display:inline-block;background:linear-gradient(120deg,var(--deep-rose),var(--rose));
+  color:#fff;font-family:'Fraunces',serif;font-style:italic;
+  padding:10px 30px;border-radius:100px;box-shadow:var(--shadow-sm);
+  font-size:1.05rem;letter-spacing:.02em;
+}
+
+.stop{
+  position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;
+  gap:40px;align-items:center;margin:0 0 64px;
+}
+.stop:nth-child(even) .stop-card{grid-column:1}
+.stop:nth-child(even) .stop-media{grid-column:2}
+.stop-media{
+  aspect-ratio:4/3;border-radius:24px;overflow:hidden;
+  background-size:cover;background-position:center;
+  box-shadow:var(--shadow);position:relative;
+  transform:scale(.92);opacity:0;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s ease;
+}
+.stop.in .stop-media{transform:scale(1);opacity:1}
+.stop-media.placeholder{
+  display:grid;place-items:center;text-align:center;
+  background:linear-gradient(150deg,var(--blush),rgba(232,106,154,.35));
+  border:2px dashed rgba(184,59,107,.4);color:var(--wine);
+}
+.stop-media.placeholder .ph-name{font-family:'Fraunces',serif;font-style:italic;font-size:1.15rem;padding:0 16px}
+.stop-media.placeholder .ph-file{font-size:.72rem;letter-spacing:.12em;opacity:.6;margin-top:8px;font-family:monospace}
+
+.stop-card{
+  opacity:0;transform:translateY(36px);
+  transition:transform .8s cubic-bezier(.2,.8,.2,1) .1s,opacity .8s ease .1s;
+}
+.stop.in .stop-card{opacity:1;transform:translateY(0)}
+.stop-time{
+  font-size:.75rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--rosegold);font-weight:700;margin-bottom:10px;
+}
+.stop-card h3{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(1.5rem,3.6vw,2.1rem);color:var(--wine);line-height:1.1;margin-bottom:12px;
+}
+.stop-card p{color:var(--ink);opacity:.85;font-size:1rem}
+.stop-card .tag{
+  display:inline-block;margin-top:14px;font-size:.78rem;
+  color:var(--deep-rose);background:rgba(232,106,154,.12);
+  padding:5px 14px;border-radius:100px;font-weight:600;letter-spacing:.03em;
+}
+.star{
+  position:absolute;top:16px;right:16px;z-index:3;
+  background:rgba(255,255,255,.9);color:var(--deep-rose);
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 12px;border-radius:100px;box-shadow:var(--shadow-sm);
+}
+
+/* ---------- house gallery ---------- */
+.house{max-width:1040px;margin:20px auto 0;padding:60px 24px}
+.house-head{text-align:center;margin-bottom:40px}
+.house-head .eyebrow{font-size:.78rem;letter-spacing:.4em;text-transform:uppercase;color:var(--rosegold);font-weight:600;margin-bottom:14px}
+.house-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.9rem,5vw,2.9rem);color:var(--wine)}
+.house-head p{opacity:.8;margin-top:12px}
+.gallery{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  grid-auto-rows:180px;
+}
+.g-item{
+  border-radius:20px;overflow:hidden;position:relative;
+  background-size:cover;background-position:center;box-shadow:var(--shadow-sm);
+  opacity:0;transform:translateY(30px) scale(.96);
+  transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s ease;
+}
+.house.in .g-item{opacity:1;transform:translateY(0) scale(1)}
+.house.in .g-item:nth-child(2){transition-delay:.08s}
+.house.in .g-item:nth-child(3){transition-delay:.16s}
+.house.in .g-item:nth-child(4){transition-delay:.24s}
+.house.in .g-item:nth-child(5){transition-delay:.32s}
+.g-item:hover{transform:translateY(-6px) scale(1.02)}
+.g-item.big{grid-column:span 2;grid-row:span 2}
+.g-item.placeholder{
+  display:grid;place-items:center;text-align:center;
+  background:linear-gradient(150deg,var(--blush),rgba(216,162,90,.3));
+  border:2px dashed rgba(184,59,107,.4);color:var(--wine);
+}
+.g-item.placeholder .ph-name{font-family:'Fraunces',serif;font-style:italic}
+.g-item.placeholder .ph-file{font-size:.68rem;font-family:monospace;opacity:.6;margin-top:6px}
+
+/* ---------- closing note ---------- */
+.finale{
+  max-width:820px;margin:40px auto 0;padding:100px 24px 130px;text-align:center;
+}
+.us-photo{
+  width:220px;height:220px;border-radius:50%;margin:0 auto 40px;
+  background-size:cover;background-position:center;
+  box-shadow:var(--shadow),0 0 0 10px rgba(255,255,255,.7),0 0 0 12px rgba(232,106,154,.3);
+  opacity:0;transform:scale(.85);transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity 1s ease;
+}
+.us-photo.placeholder{display:grid;place-items:center;text-align:center;
+  background:linear-gradient(150deg,var(--blush),var(--rose));color:#fff;
+  font-family:'Fraunces',serif;font-style:italic;font-size:.9rem;padding:20px}
+.finale.in .us-photo{opacity:1;transform:scale(1)}
+.finale h2{
+  font-family:'Parisienne',cursive;font-size:clamp(2.6rem,8vw,4.4rem);
+  color:var(--deep-rose);line-height:1;margin-bottom:24px;
+  opacity:0;transform:translateY(24px);transition:.9s .2s;
+}
+.finale.in h2{opacity:1;transform:translateY(0)}
+.finale p{
+  font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.1rem,3vw,1.4rem);
+  color:var(--wine);max-width:44ch;margin:0 auto;
+  opacity:0;transform:translateY(24px);transition:.9s .4s;
+}
+.finale.in p{opacity:1;transform:translateY(0)}
+.finale .sign{
+  margin-top:40px;font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--rosegold);font-weight:600;
+  opacity:0;transition:.9s .6s;
+}
+.finale.in .sign{opacity:1}
+
+/* ---------- scroll progress heart ---------- */
+.prog-heart{
+  position:fixed;right:22px;bottom:22px;z-index:60;
+  width:46px;height:46px;filter:drop-shadow(0 6px 14px rgba(184,59,107,.35));
+  opacity:0;transition:opacity .6s ease;
+}
+.prog-heart.show{opacity:1}
+.prog-heart svg{width:100%;height:100%;overflow:visible}
+.prog-heart .track{fill:rgba(232,106,154,.18)}
+.prog-heart .outline{fill:none;stroke:var(--rose);stroke-width:1.4}
+
+/* day-label hover */
+.day-label span{transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease;cursor:default}
+.day-label span:hover{transform:translateY(-3px) scale(1.03);box-shadow:var(--shadow)}
+
+/* ---------- responsive ---------- */
+@media(max-width:760px){
+  .route-svg{left:28px;transform:none;width:60px}
+  .stop{grid-template-columns:1fr;gap:20px;padding-left:56px;margin-bottom:48px}
+  .stop:nth-child(even) .stop-card,.stop:nth-child(even) .stop-media{grid-column:1}
+  .stop-media{order:-1}
+  .day-label{text-align:left;padding-left:56px}
+  .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
+  .g-item.big{grid-column:span 2;grid-row:span 1}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .petal{display:none}
+  .stop-media,.stop-card,.g-item,.us-photo,.finale h2,.finale p,.finale .sign{opacity:1;transform:none}
+}
+</style>
+</head>
+<body class="locked">
+
+<div class="bg-wash"></div>
+
+<!-- scroll progress heart -->
+<div class="prog-heart" id="progHeart" aria-hidden="true">
+  <svg viewBox="0 0 24 24">
+    <defs>
+      <clipPath id="hClip">
+        <path d="M12 21s-7.5-4.9-10-9.2C.3 8.4 2 5 5.2 5c2 0 3.3 1.2 4 2.3C10 6.2 11.2 5 13.3 5 16.5 5 18.2 8.4 16.5 11.8 14 16.1 12 21 12 21z"/>
+      </clipPath>
+    </defs>
+    <g clip-path="url(#hClip)">
+      <rect class="track" x="0" y="0" width="24" height="24"/>
+      <rect id="hFill" x="0" y="24" width="24" height="0" fill="url(#routeGrad)"/>
+    </g>
+    <path class="outline" d="M12 21s-7.5-4.9-10-9.2C.3 8.4 2 5 5.2 5c2 0 3.3 1.2 4 2.3C10 6.2 11.2 5 13.3 5 16.5 5 18.2 8.4 16.5 11.8 14 16.1 12 21 12 21z"/>
+  </svg>
+</div>
+
+<!-- opening gate -->
+<div class="gate" id="gate">
+  <div class="gate-card" id="gateCard">
+    <div class="seal">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-10-9.2C.3 8.4 2 5 5.2 5c2 0 3.3 1.2 4 2.3C10 6.2 11.2 5 13.3 5 16.5 5 18.2 8.4 16.5 11.8 14 16.1 12 21 12 21z"/></svg>
+    </div>
+    <div class="eyebrow">A little something for</div>
+    <h1>Hargun</h1>
+    <div class="tap"><span class="dot"></span> tap to open</div>
+  </div>
+</div>
+
+<!-- hero -->
+<header class="hero">
+  <div class="hero-photo" data-photo="hero-bg.jpg"></div>
+  <div class="eyebrow">Our weekend escape</div>
+  <div class="name">Hargun</div>
+  <p class="sub">I'm stealing you away to the mountains. Pack light, wear good shoes, and let me take care of the rest.</p>
+  <div class="dates">July 24 — 26 · Mount Shasta</div>
+  <div class="countdown" id="countdown"></div>
+  <div class="scroll-cue"><span>scroll</span><span class="mouse"></span></div>
+</header>
+
+<!-- intro -->
+<section class="intro">
+  <div class="eyebrow">The plan</div>
+  <h2>Three days, one mountain, and the two of us madly in love.</h2>
+  <p>Here's every stop, in order, from the second you land to the second I have to let you go. Follow the line.</p>
+</section>
+
+<!-- timeline -->
+<div class="timeline" id="timeline">
+  <svg class="route-svg" id="routeSvg" preserveAspectRatio="none" viewBox="0 0 120 2400">
+    <defs>
+      <linearGradient id="routeGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#E86A9A"/>
+        <stop offset="50%" stop-color="#B83B6B"/>
+        <stop offset="100%" stop-color="#D8A25A"/>
+      </linearGradient>
+    </defs>
+    <path class="route-path" id="routePath"
+      d="M60,0 C60,120 20,200 20,320 C20,440 100,520 100,640 C100,760 20,840 20,960 C20,1080 100,1160 100,1280 C100,1400 20,1480 20,1600 C20,1720 100,1800 100,1920 C100,2040 60,2120 60,2400"/>
+  </svg>
+
+  <!-- FRIDAY -->
+  <div class="day-label"><span>Friday · you land </span></div>
+
+  <div class="stop">
+    <div class="stop-card">
+      <div class="stop-time">9:00 AM</div>
+      <h3>I grab you at SFO</h3>
+      <p>Wheels down, monsters acquired and we point the car north. The mountains are calling and the weekend is officially ours.</p>
+      <span class="tag">the beginning</span>
+    </div>
+    <div class="stop-media" data-photo="plane.jpg" data-name="SFO / the airport pickup"></div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-card">
+      <div class="stop-time">Midday</div>
+      <h3>The drive up</h3>
+      <p>Five hours of you, me, bollywood + punjabi bangers, and windows down. We stop in Redding to eat and stretch, then keep climbing until the mountain shows up on the horizon.</p>
+      <span class="tag">~5 hours · worth every mile</span>
+    </div>
+    <div class="stop-media" data-photo="castle-crags.jpg" data-name="the road north"></div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-card">
+      <div class="stop-time">Afternoon</div>
+      <h3>Hedge Creek Falls</h3>
+      <p>A five-minute walk from town to a waterfall you can stand behind. Perfect chill sidequest before we settle in for the night.</p>
+      <span class="tag">Dunsmuir</span>
+    </div>
+    <div class="stop-media" data-photo="hedge-creek.jpg" data-name="Hedge Creek Falls"></div>
+  </div>
+
+  <!-- house gallery sits here in the flow -->
+
+  <!-- SATURDAY -->
+  <div class="day-label"><span>Saturday · the big day</span></div>
+
+  <div class="stop">
+    <div class="stop-media" data-photo="heart-lake.jpg" data-name="Heart Lake" data-star="the one you picked"></div>
+    <div class="stop-card">
+      <div class="stop-time">7:00 AM</div>
+      <h3>Heart Lake, just us</h3>
+      <p>We beat the crowd, climb above Castle Lake, and find the little alpine tucked in the bowl with Shasta mirrored behind it. The cutest view in the whole range. Maybe we swim. Maybe we do other things ;-) We defintely stay awhile. </p>
+      <span class="tag">the money shot</span>
+    </div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-card">
+      <div class="stop-time">Afternoon</div>
+      <h3>McCloud Falls</h3>
+      <p>Three waterfalls linked by an easy trail, and a big clear pool at the middle one to swim off the morning's climb. Sun, water, and nowhere we need to be.</p>
+      <span class="tag">swim spot</span>
+    </div>
+    <div class="stop-media" data-photo="mccloud-falls.jpg" data-name="McCloud Falls"></div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-card">
+      <div class="stop-time">Golden hour</div>
+      <h3>Sunset at Castle Crags</h3>
+      <p>We pull off right by town as the light hits the granite spires and the mountain glows. Then dinner, and the rest of the night is ours.</p>
+      <span class="tag">the perfect end</span>
+    </div>
+    <div class="stop-media" data-photo="castle-crags.jpg" data-name="Castle Crags at sunset"></div>
+  </div>
+
+  <!-- SUNDAY -->
+  <div class="day-label"><span>Sunday · the long way home</span></div>
+
+  <div class="stop">
+    <div class="stop-card">
+      <div class="stop-time">Afternoon</div>
+      <h3>Lunch in the city with Mom</h3>
+      <p>We roll into San Francisco and my mom finally gets to meet the person I keep talking about. Good food, no rush, the two of you in the same room at last.</p>
+      <span class="tag">the people who matter</span>
+    </div>
+    <div class="stop-media" data-photo="sf-lunch.jpg" data-name="San Francisco lunch"></div>
+  </div>
+
+  <div class="stop">
+    <div class="stop-card">
+      <div class="stop-time">Evening</div>
+      <h3>And then I let you go</h3>
+      <p>Back to SFO for your 11:45 flight, already counting down to the next time. Thank you for saying yes to the mountains with me.</p>
+      <span class="tag">until next time</span>
+    </div>
+    <div class="stop-media" data-photo="hero-bg.jpg" data-name="the sendoff"></div>
+  </div>
+</div>
+
+<!-- house gallery -->
+<section class="house" id="house">
+  <div class="house-head">
+    <div class="eyebrow">Home base · Dunsmuir</div>
+    <h2>Our little place in the trees</h2>
+    <p>This is where we're staying. Two nights, all ours.</p>
+  </div>
+  <div class="gallery">
+    <div class="g-item big" data-photo="house-1.jpg" data-name="the house"></div>
+    <div class="g-item" data-photo="house-2.jpg" data-name="inside"></div>
+    <div class="g-item" data-photo="house-3.jpg" data-name="the room"></div>
+    <div class="g-item" data-photo="house-4.jpg" data-name="the view"></div>
+    <div class="g-item" data-photo="house-5.jpg" data-name="the details"></div>
+  </div>
+</section>
+
+<!-- finale -->
+<section class="finale" id="finale">
+  <div class="us-photo" data-photo="us.jpg" data-name="us"></div>
+  <h2>Can't wait, Hargun</h2>
+  <p>Three days with you in the mountains is all I've been thinking about. Let's make it one we never forget.</p>
+  <div class="sign">See you on the 24th</div>
+</section>
+
+<script>
+/* ---------- fill photos or show placeholders ---------- */
+function loadPhotos(){
+  document.querySelectorAll('[data-photo]').forEach(el=>{
+    const file=el.getAttribute('data-photo');
+    const name=el.getAttribute('data-name')||'';
+    const img=new Image();
+    img.onload=()=>{ el.style.backgroundImage=`url('${file}')`; };
+    img.onerror=()=>{ makePlaceholder(el,name,file); };
+    img.src=file;
+  });
+}
+function makePlaceholder(el,name,file){
+  // hero background: just leave gradient, no label
+  if(el.classList.contains('hero-photo')) return;
+  el.classList.add('placeholder');
+  if(el.classList.contains('us-photo')){ el.textContent='add us.jpg'; return; }
+  el.innerHTML=`<div><div class="ph-name">${name}</div><div class="ph-file">${file}</div></div>`;
+}
+
+/* ---------- countdown ---------- */
+function tickCountdown(){
+  const target=new Date('2026-07-24T09:00:00-07:00').getTime();
+  const el=document.getElementById('countdown');
+  function render(){
+    let d=target-Date.now();
+    if(d<0)d=0;
+    const days=Math.floor(d/86400000);
+    const hrs=Math.floor(d%86400000/3600000);
+    const min=Math.floor(d%3600000/60000);
+    const sec=Math.floor(d%60000/1000);
+    const units=[[days,'days'],[hrs,'hours'],[min,'mins'],[sec,'secs']];
+    el.innerHTML=units.map(([n,l])=>
+      `<div class="cd-unit"><div class="cd-num">${String(n).padStart(2,'0')}</div><div class="cd-lbl">${l}</div></div>`
+    ).join('');
+  }
+  render();
+  setInterval(render,1000);
+}
+
+/* ---------- star badges on media ---------- */
+function addStars(){
+  document.querySelectorAll('[data-star]').forEach(el=>{
+    const b=document.createElement('div');
+    b.className='star';b.textContent='★ '+el.getAttribute('data-star');
+    el.appendChild(b);
+  });
+}
+
+/* ---------- scroll reveals ---------- */
+function setupReveals(){
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        if(e.target.id==='finale') makePetals(12); // little burst at the love note
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.18});
+  document.querySelectorAll('.stop,.house,.finale').forEach(el=>io.observe(el));
+}
+
+/* ---------- scroll progress heart ---------- */
+function setupProgressHeart(){
+  const heart=document.getElementById('progHeart');
+  const fill=document.getElementById('hFill');
+  let ticking=false;
+  function update(){
+    const doc=document.documentElement;
+    const max=doc.scrollHeight-window.innerHeight;
+    const p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
+    fill.setAttribute('y',24*(1-p));
+    fill.setAttribute('height',24*p);
+    heart.classList.toggle('show',window.scrollY>window.innerHeight*0.6);
+    ticking=false;
+  }
+  window.addEventListener('scroll',()=>{
+    if(!ticking){requestAnimationFrame(update);ticking=true;}
+  },{passive:true});
+  update();
+}
+
+/* ---------- self-drawing route line ---------- */
+function setupRoute(){
+  const path=document.getElementById('routePath');
+  const tl=document.getElementById('timeline');
+  const len=path.getTotalLength();
+  path.style.strokeDasharray=len;
+  path.style.strokeDashoffset=len;
+  let ticking=false;
+  function update(){
+    const r=tl.getBoundingClientRect();
+    const vh=window.innerHeight;
+    // progress: 0 when top of timeline hits mid-screen, 1 when bottom does
+    const total=r.height+vh*0.4;
+    const passed=(vh*0.6)-r.top;
+    let p=passed/total;
+    p=Math.max(0,Math.min(1,p));
+    path.style.strokeDashoffset=len*(1-p);
+    ticking=false;
+  }
+  window.addEventListener('scroll',()=>{
+    if(!ticking){requestAnimationFrame(update);ticking=true;}
+  },{passive:true});
+  update();
+}
+
+/* ---------- petals ---------- */
+function makePetals(n){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div');
+    p.className='petal';
+    const size=8+Math.random()*14;
+    p.style.left=Math.random()*100+'vw';
+    p.style.width=p.style.height=size+'px';
+    p.style.animationDuration=(10+Math.random()*12)+'s';
+    p.style.animationDelay=(-Math.random()*14)+'s';
+    p.style.opacity=(.3+Math.random()*.35);
+    document.body.appendChild(p);
+  }
+}
+
+/* ---------- open gate ---------- */
+function setupGate(){
+  const gate=document.getElementById('gate');
+  const card=document.getElementById('gateCard');
+  function open(){
+    gate.classList.add('open');
+    document.body.classList.remove('locked');
+    makePetals(6); // burst a few more on open
+    setTimeout(()=>gate.remove(),1200);
+  }
+  card.addEventListener('click',open);
+  gate.addEventListener('click',open);
+}
+
+/* ---------- init ---------- */
+loadPhotos();
+tickCountdown();
+addStars();
+setupReveals();
+setupRoute();
+setupProgressHeart();
+makePetals(14);
+setupGate();
+</script>
+</body>
+</html>
